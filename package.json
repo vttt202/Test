@@ -1,0 +1,27 @@
+{
+  "name": "test",
+  "version": "1.0.0",
+  "description": "test nodejs",
+  "main": "exercise-1.js",
+  "dependencies": {},
+  "devDependencies": {
+    "expect": "24.8.0",
+    "jest": "24.8.0",
+    "@babel/plugin-proposal-class-properties": "7.2.3",
+    "@babel/preset-env": "7.2.3"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-env"
+    ],
+    "plugins": [
+      "@babel/plugin-proposal-class-properties"
+    ]
+  },
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage"
+  },
+  "author": "tuvu",
+  "license": "ISC"
+}
