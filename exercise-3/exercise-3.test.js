@@ -1,5 +1,5 @@
 import expect from 'expect';
-import NetPayableAmount from './exercise-3';
+import NetPayAmount from './exercise-3';
 
 const bills = {
   0: {
@@ -20,7 +20,7 @@ const bills = {
   },
 };
 
-describe('Print bill with net payable amount', () => {
+describe('Show bill with net payable amount', () => {
   it('should discount 30% when user is an employee of the store (userType === 1)', () => {
     const expected = {
       '0': {
@@ -30,7 +30,7 @@ describe('Print bill with net payable amount', () => {
         netPayable: 360,
       },
     };
-    const payable = new NetPayableAmount();
+    const payable = new NetPayAmount();
 
     payable.getUser(1);
     payable.getBills(bills);
@@ -48,7 +48,7 @@ describe('Print bill with net payable amount', () => {
         netPayable: 945,
       },
     };
-    const payable = new NetPayableAmount();
+    const payable = new NetPayAmount();
 
     payable.getUser(4);
     payable.getBills(bills);
@@ -57,8 +57,8 @@ describe('Print bill with net payable amount', () => {
     expect(payable.discountedBill).toEqual(expected);
   });
 
-  it('should not discount when userType === 5', () => {
-    const payable = new NetPayableAmount();
+  it('should not discount when userType not in promoted list', () => {
+    const payable = new NetPayAmount();
 
     const result = payable.getUser(5);
 

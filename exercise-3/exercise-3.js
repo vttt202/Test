@@ -1,6 +1,6 @@
 import Constants from '../constants';
 
-export default class NetPayableAmount {
+export default class NetPayAmount {
   constructor() {
     this.userType = 0;
     this.bills = {};
@@ -19,19 +19,19 @@ export default class NetPayableAmount {
   };
 
   calculateDiscount = () => {
-    for (let key in this.discountedBill) {
-      const invoiceAmount = this.discountedBill[key].invoiceAmount;
-      const amountToApplyDiscount = this.discountedBill[key].amountToApplyDiscount;
+    for (let bill in this.discountedBill) {
+      const invoiceAmount = this.discountedBill[bill].invoiceAmount;
+      const amountToApplyDiscount = this.discountedBill[bill].amountToApplyDiscount;
       let discount = 0;
 
-      if (this.userType === 4) {
-        discount += Math.floor(amountToApplyDiscount / Constants.DISCOUNT_RANGE) * Constants.DISCOUNT_AMOUNT;
+      if (this.userType !== 4) {
+        discount += (1 - Constants.DISCOUNT_BY_USER_TYPE[this.userType]) * amountToApplyDiscount;
       } else {
-        discount += amountToApplyDiscount * (1 - Constants.DISCOUNT_BY_USER_TYPE[this.userType]);
+        discount += Math.floor(amountToApplyDiscount / Constants.DISCOUNT_RANGE) * Constants.DISCOUNT_AMOUNT;
       }
 
-      this.discountedBill[key] = {
-        ...this.discountedBill[key],
+      this.discountedBill[bill] = {
+        ...this.discountedBill[bill],
         discount,
         netPayable: invoiceAmount - discount,
       };
@@ -39,13 +39,17 @@ export default class NetPayableAmount {
   };
 
   getDiscountedBill = () => {
-    const discountedCategories = Object.keys(Constants.CATEGORY_LIST_DISCOUNT).filter((categoryId) => Constants.CATEGORY_LIST_DISCOUNT[categoryId] === 1);
+    const discountedCategories = Object.keys(Constants.CATEGORY_LIST_DISCOUNT).filter(
+      (categoryId) => Constants.CATEGORY_LIST_DISCOUNT[categoryId] === 1
+    );
 
     for (let key in this.bills) {
       let amountToApplyDiscount = 0;
       let invoiceAmount = 0;
       const purchasedItems = this.bills[key].items;
-      const discountedItems = purchasedItems.filter((item) => discountedCategories.includes(item.categoryId.toString()));
+      const discountedItems = purchasedItems.filter((item) =>
+        discountedCategories.includes(item.categoryId.toString())
+      );
 
       purchasedItems.map((item) => {
         invoiceAmount += item.price * item.quantity;
