@@ -1,7 +1,7 @@
 import expect from 'expect';
 import { storeData, loadData } from './exercise-1';
 
-describe('storeData function testing', () => {
+describe('Function storeData testing', () => {
   it('return string from an array', () => {
     const array = [
       {
@@ -25,7 +25,7 @@ describe('storeData function testing', () => {
   });
 });
 
-describe('loadData function testing', () => {
+describe('Function loadData testing', () => {
   it('return array from a given string', () => {
     const expected = [
       {

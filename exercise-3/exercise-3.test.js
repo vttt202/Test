@@ -20,8 +20,8 @@ const bills = {
   },
 };
 
-describe('print bill with net payable amount', () => {
-  it('should discount 30% when userType === 1', () => {
+describe('Print bill with net payable amount', () => {
+  it('should discount 30% when user is an employee of the store (userType === 1)', () => {
     const expected = {
       '0': {
         invoiceAmount: 990,
@@ -39,7 +39,7 @@ describe('print bill with net payable amount', () => {
     expect(payable.discountedBill).toEqual(expected);
   });
 
-  it('should discount for every $100 step when userType === 4', () => {
+  it('discount 5$ for every $100 spent', () => {
     const expected = {
       '0': {
         invoiceAmount: 990,
